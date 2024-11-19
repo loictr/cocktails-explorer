@@ -1,0 +1,12 @@
+venv/
+
+front/.angular
+front/dist
+front/node_modules
+
+api/__pycache__/
+
+db/
+data/
+
+from bolt/

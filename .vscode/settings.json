@@ -1,0 +1,28 @@
+{
+    "files.exclude": {
+        "**/*.rpyc": true,
+        "**/*.rpa": true,
+        "**/*.rpymc": true,
+        "**/cache/": true
+    },
+    "cSpell.words": [
+        "chromadb",
+        "Colada",
+        "debugpy",
+        "devkit",
+        "hotswap",
+        "iterrows",
+        "jsonify",
+        "metadatas",
+        "Pina",
+        "rpyc",
+        "rpymc",
+        "thecocktaildb",
+        "Vectorizer",
+        "venv"
+    ],
+    "cSpell.ignorePaths": [
+        "translationsFR.py",
+        "venv/**/*"
+    ]
+}

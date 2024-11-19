@@ -1,0 +1,27 @@
+@base_url=http://127.0.0.1:4201
+
+###
+# @name cocktails_list
+GET {{base_url}}/api/cocktails
+Accept: application/json
+
+
+### 
+# @name cocktail_detail
+
+@id = {{cocktails_list.response.body.$[0].id}}
+
+GET {{base_url}}/api/cocktails/{{id}}
+Accept: application/json
+
+
+###
+# @name suggestions
+
+POST {{base_url}}/api/cocktails/suggestions
+Accept: application/json
+Content-Type: application/json
+
+{
+    "liked_ids": ["{{cocktails_list.response.body.$[0].id}}", "{{cocktails_list.response.body.$[1].id}}"]
+}
