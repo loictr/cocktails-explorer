@@ -28,7 +28,6 @@ import { CommonModule } from '@angular/common';
         height: 5rem;
         margin-right: 1rem;
         vertical-align: middle;
-        
       }
     }
     h1 {
@@ -39,6 +38,15 @@ import { CommonModule } from '@angular/common';
       font-family: "Poppins", sans-serif;
       font-weight: 400;
       font-style: normal;
+    }
+
+    @media (max-width: 600px) {
+      .header img {
+        height: 3rem;
+      }
+      .header h1 {
+        font-size: 2rem;
+      }
     }
   `]
 })

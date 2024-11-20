@@ -59,10 +59,28 @@ import { CocktailCardComponent } from '../../components/cocktail-card/cocktail-c
       justify-content: space-between;
       align-items: center;
       margin-bottom: 2rem;
+      flex-wrap: wrap;
     }
     h1 {
       font-size: 2.5rem;
       color: var(--text-color);
+      flex: 1 1 100%;
+    }
+    .btn {
+      margin-top: 1rem;
+      flex: 1 1 100%;
+    }
+    @media (min-width: 600px) {
+      .page-header-first-row {
+        flex-wrap: nowrap;
+      }
+      h1 {
+        flex: 0 1 auto;
+      }
+      .btn {
+        margin-top: 0;
+        flex: 0 1 auto;
+      }
     }
     .suggestions-header {
       display: flex;

@@ -176,6 +176,12 @@ import { MatButtonModule } from '@angular/material/button';
     .btn-favorite.selected mat-icon::before {
       content: 'favorite';
     }
+
+    @media (max-width: 767px) {
+      .back-btn {
+        display: none;
+      }
+    }
   `]
 })
 export class CocktailDetailComponent implements OnInit {
