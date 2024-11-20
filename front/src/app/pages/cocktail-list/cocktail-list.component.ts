@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { CocktailService } from '../../services/cocktail.service';
 import { Cocktail } from '../../models/cocktail.model';
 import { CocktailCardComponent } from '../../components/cocktail-card/cocktail-card.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-cocktail-list',
@@ -25,7 +26,7 @@ import { CocktailCardComponent } from '../../components/cocktail-card/cocktail-c
       <div class="page-header-first-row">
         <h1>Suggested Cocktails</h1>
         <button class="btn" 
-                (click)="showingSuggestions = false" 
+                (click)="hideSuggestions()" 
                 [disabled]="!hasSelections">
                 ← Back to Selection
         </button>
@@ -105,12 +106,25 @@ export class CocktailListComponent implements OnInit {
   suggestedCocktails: Cocktail[] = [];
   showingSuggestions = false;
 
-  constructor(private cocktailService: CocktailService) {}
+  constructor(
+    private cocktailService: CocktailService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location
+  ) {}
 
   ngOnInit(): void {
     this.cocktailService.getCocktails().subscribe(
       cocktails => this.cocktails = cocktails
     );
+
+    this.route.url.subscribe(url => {
+      if (url.some(segment => segment.path === 'suggestions')) {
+        this.showSuggestions();
+      } else {
+        this.hideSuggestions();
+      }
+    });
   }
 
   toggleSelection(id: string): void {
@@ -130,7 +144,13 @@ export class CocktailListComponent implements OnInit {
       suggestions => {
         this.suggestedCocktails = suggestions;
         this.showingSuggestions = true;
+        this.router.navigate(['/cocktails/suggestions']); // Navigate to suggestions route
       }
     );
+  }
+
+  hideSuggestions(): void {
+    this.showingSuggestions = false;
+    this.router.navigate(['/cocktails']); // Navigate to cocktails list route
   }
 }
