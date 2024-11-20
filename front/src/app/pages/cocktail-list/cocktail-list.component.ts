@@ -55,6 +55,13 @@ import { Location } from '@angular/common';
     </div>
   `,
   styles: [`
+    .page-header {
+      position: sticky;
+      top: 0;
+      background: var(--background-color);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
     .page-header-first-row {
       display: flex;
       justify-content: space-between;
@@ -145,6 +152,7 @@ export class CocktailListComponent implements OnInit {
         this.suggestedCocktails = suggestions;
         this.showingSuggestions = true;
         this.router.navigate(['/cocktails/suggestions']); // Navigate to suggestions route
+        window.scrollTo(0, 0);
       }
     );
   }
@@ -152,5 +160,6 @@ export class CocktailListComponent implements OnInit {
   hideSuggestions(): void {
     this.showingSuggestions = false;
     this.router.navigate(['/cocktails']); // Navigate to cocktails list route
+    window.scrollTo(0, 0);
   }
 }
