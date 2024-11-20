@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { CocktailListComponent } from './pages/cocktail-list/cocktail-list.component';
 
+// TODO: when the user navigates to /cocktails/suggestions then to a cocktails details, the back button should take them back to /cocktails/suggestions
+
 export const routes: Routes = [
   {
     path: '',
