@@ -39,7 +39,7 @@ import { CocktailCardComponent } from '../../components/cocktail-card/cocktail-c
         <app-cocktail-card
           *ngFor="let cocktail of suggestedCocktails"
           [cocktail]="cocktail"
-          [isSelected]="false"
+          [isSelected]="isSelected(cocktail.id)"
           (onSelect)="toggleSelection($event)">
         </app-cocktail-card>
       </div>

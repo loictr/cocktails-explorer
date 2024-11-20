@@ -5,11 +5,13 @@ import { CocktailService } from '../../services/cocktail.service';
 import { CocktailDetails } from '../../models/cocktail.model';
 import { AlcoholBadgeComponent } from '../../components/badges/alcohol-badge';
 import { GlassBadgeComponent } from '../../components/badges/glass-badge';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-cocktail-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, AlcoholBadgeComponent, GlassBadgeComponent],
+  imports: [CommonModule, RouterModule, AlcoholBadgeComponent, GlassBadgeComponent, MatIconModule, MatButtonModule],
   template: `
     <div *ngIf="cocktail" class="cocktail-detail slide-up">
       <a routerLink="/" class="btn btn-secondary back-btn">← Back to List</a>
@@ -24,7 +26,12 @@ import { GlassBadgeComponent } from '../../components/badges/glass-badge';
         </div>
         
         <div class="info">
-          <h1>{{ cocktail.name }}</h1>
+          <div class="header">
+            <h1>{{ cocktail.name }}</h1>
+            <button mat-icon-button class="btn-favorite" (click)="toggleSelection()" [class.selected]="isSelected()">
+              <mat-icon>favorite_border</mat-icon>
+            </button>
+          </div>
 
           <section class="ingredients-section">
             <h2>Ingredients</h2>
@@ -78,6 +85,11 @@ import { GlassBadgeComponent } from '../../components/badges/glass-badge';
     }
     .info {
       padding: 2.5rem;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     h1 {
       font-size: 2.5rem;
@@ -137,6 +149,33 @@ import { GlassBadgeComponent } from '../../components/badges/glass-badge';
         bottom: auto;
       }
     }
+
+    .btn-favorite {
+      color: var(--primary-color);
+      vertical-align: middle;
+    }
+
+    .btn-favorite mat-icon {
+      font-size: 3rem;
+      height: 3rem;
+      width: 3rem;
+
+      top: -2rem;
+      left: -0.75rem;
+    }
+
+    .btn-favorite:hover mat-icon::before {
+      content: 'favorite';
+      color: var(--primary-dark);
+    }
+
+    .btn-favorite mat-icon::before {
+      content: 'favorite_border';
+    }
+
+    .btn-favorite.selected mat-icon::before {
+      content: 'favorite';
+    }
   `]
 })
 export class CocktailDetailComponent implements OnInit {
@@ -154,5 +193,16 @@ export class CocktailDetailComponent implements OnInit {
         cocktail => this.cocktail = cocktail
       );
     }
+  }
+
+  toggleSelection() {
+    if(this.cocktail)
+      this.cocktailService.toggleSelection(this.cocktail.id);
+  }
+
+  isSelected() {
+    if(this.cocktail)
+      return this.cocktailService.isSelected(this.cocktail.id);
+    return false;
   }
 }

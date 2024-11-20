@@ -3,15 +3,15 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Cocktail } from '../../models/cocktail.model';
 import { AlcoholBadgeComponent } from '../badges/alcohol-badge';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-cocktail-card',
+  imports: [CommonModule, RouterModule, AlcoholBadgeComponent, MatIconModule, MatButtonModule],
   standalone: true,
-  imports: [CommonModule, RouterModule, AlcoholBadgeComponent],
   template: `
-    <div class="card slide-up" 
-         [class.selected]="isSelected"
-         (click)="onSelect.emit(cocktail.id)">
+    <div class="card slide-up">
       <div class="image-container">
         <img [src]="cocktail.image_thumb" [alt]="cocktail.name">
         <div class="overlay">
@@ -28,11 +28,16 @@ import { AlcoholBadgeComponent } from '../badges/alcohol-badge';
             </li>
           </ul>
         </div>
+      </div>
+      <div class="card-footer">
         <a [routerLink]="['/cocktail', cocktail.id]" 
            class="btn view-details"
            (click)="$event.stopPropagation()">
            View Details
         </a>
+        <button mat-icon-button class="btn-favorite" (click)="onSelect.emit(cocktail.id)" [class.selected]="isSelected">
+          <mat-icon>favorite_border</mat-icon>
+        </button>
       </div>
     </div>
   `,
@@ -70,10 +75,10 @@ import { AlcoholBadgeComponent } from '../badges/alcohol-badge';
     .ingredients ul {
       list-style: none;
       padding: 0;
-      margin: 0 0 1.5rem 0;
+      margin: 0 0 0 0;
     }
     .ingredients li {
-      padding: 0.25rem 0;
+      padding-top: 0.25rem 0;
       color: #555;
       font-size: 0.95rem;
     }
@@ -83,8 +88,42 @@ import { AlcoholBadgeComponent } from '../badges/alcohol-badge';
       font-weight: bold;
       margin-right: 0.5rem;
     }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     .view-details {
       text-align: center;
+    }
+
+    .btn-favorite {
+      color: var(--primary-color);
+      vertical-align: middle;
+    }
+
+    .btn-favorite mat-icon {
+      font-size: 3rem;
+      height: 3rem;
+      width: 3rem;
+
+      top: -0.75rem;
+      left: -0.75rem;
+    }
+
+    .btn-favorite:hover mat-icon::before {
+      content: 'favorite';
+      color: var(--primary-dark);
+    }
+
+    .btn-favorite mat-icon::before {
+      content: 'favorite_border';
+    }
+
+    .btn-favorite.selected mat-icon::before {
+      content: 'favorite';
     }
   `]
 })
