@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { Cocktail } from '../../models/cocktail.model';
 import { AlcoholBadgeComponent } from '../badges/alcohol-badge';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [CommonModule, RouterModule, AlcoholBadgeComponent, MatIconModule, MatButtonModule],
   standalone: true,
   template: `
-    <div class="card slide-up">
+    <div class="card slide-up" (click)="navigateToDetails()">
       <div class="image-container">
         <img [src]="cocktail.image_thumb" [alt]="cocktail.name">
         <div class="overlay">
@@ -35,7 +35,7 @@ import { MatButtonModule } from '@angular/material/button';
            (click)="$event.stopPropagation()">
            View Details
         </a>
-        <button mat-icon-button class="btn-favorite" (click)="onSelect.emit(cocktail.id)" [class.selected]="isSelected">
+        <button mat-icon-button class="btn-favorite" (click)="toggleFavorite($event)" [class.selected]="isSelected">
           <mat-icon>favorite_border</mat-icon>
         </button>
       </div>
@@ -131,4 +131,15 @@ export class CocktailCardComponent {
   @Input() cocktail!: Cocktail;
   @Input() isSelected = false;
   @Output() onSelect = new EventEmitter<string>();
+
+  constructor(private router: Router) {}
+
+  navigateToDetails() {
+    this.router.navigate(['/cocktail', this.cocktail.id]);
+  }
+
+  toggleFavorite(event: Event) {
+    event.stopPropagation();
+    this.onSelect.emit(this.cocktail.id);
+  }
 }

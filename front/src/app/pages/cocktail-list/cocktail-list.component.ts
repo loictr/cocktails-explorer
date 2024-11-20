@@ -10,13 +10,27 @@ import { CocktailCardComponent } from '../../components/cocktail-card/cocktail-c
   standalone: true,
   imports: [CommonModule, RouterModule, CocktailCardComponent],
   template: `
-    <div class="page-header fade-in">
-      <h1>Discover Cocktails</h1>
-      <button class="btn" 
-              (click)="showSuggestions()" 
-              [disabled]="!hasSelections">
-        ✨ Show Suggestions
-      </button>
+    <div class="page-header fade-in" *ngIf="!showingSuggestions">
+      <div class="page-header-first-row">
+        <h1>Discover Cocktails</h1>
+        <button class="btn" 
+                (click)="showSuggestions()" 
+                [disabled]="!hasSelections">
+          ✨ Show Suggestions
+        </button>
+      </div>
+      <div>Select your favorite cocktails</div>
+    </div>
+    <div class="page-header fade-in" *ngIf="showingSuggestions">
+      <div class="page-header-first-row">
+        <h1>Suggested Cocktails</h1>
+        <button class="btn" 
+                (click)="showingSuggestions = false" 
+                [disabled]="!hasSelections">
+                ← Back to Selection
+        </button>
+      </div>
+      <div>Our suggestions based on your favorite cocktails</div>
     </div>
 
     <div *ngIf="!showingSuggestions" class="grid">
@@ -29,12 +43,6 @@ import { CocktailCardComponent } from '../../components/cocktail-card/cocktail-c
     </div>
 
     <div *ngIf="showingSuggestions" class="suggestions slide-up">
-      <div class="suggestions-header">
-        <h2>Suggested Cocktails</h2>
-        <button class="btn btn-secondary" (click)="showingSuggestions = false">
-          ← Back to Selection
-        </button>
-      </div>
       <div class="grid">
         <app-cocktail-card
           *ngFor="let cocktail of suggestedCocktails"
@@ -46,7 +54,7 @@ import { CocktailCardComponent } from '../../components/cocktail-card/cocktail-c
     </div>
   `,
   styles: [`
-    .page-header {
+    .page-header-first-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
