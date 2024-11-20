@@ -118,10 +118,12 @@ import { MatButtonModule } from '@angular/material/button';
       color: var(--primary-color);
       font-weight: 600;
       min-width: 100px;
+      text-align: right;
     }
     .ingredient {
       color: var(--text-color);
       padding-right: 1rem;
+      flex: 1;
     }
     .instructions {
       line-height: 1.8;
