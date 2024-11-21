@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <header class="header">
       <nav class="container">
-        <img src="apple-touch-icon.png" alt="">
+        <img src="logo.svg" alt="">
         <h1>Cocktail Explorer</h1>
         <a href="https://loictr.github.io/portfolio/cocktails-explorer.html">About</a>
       </nav>
