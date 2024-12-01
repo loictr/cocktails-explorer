@@ -58,7 +58,6 @@ import { Location } from '@angular/common';
     .page-header {
       position: sticky;
       top: 0;
-      background: var(--background-color);
       z-index: 1000;
       padding: 1rem 0;
     }

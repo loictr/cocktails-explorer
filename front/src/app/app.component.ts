@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
       <nav class="container">
         <img src="logo.svg" alt="">
         <h1>Cocktail Explorer</h1>
-        <a href="https://loictr.github.io/portfolio/cocktails-explorer.html">About</a>
+        <a href="https://loictr.github.io/portfolio/projects/cocktail-recommendation/">About</a>
       </nav>
     </header>
     <main class="container">
@@ -19,8 +19,21 @@ import { CommonModule } from '@angular/common';
     </main>
   `,
   styles: [`
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     .header {
-      background-color: var(--primary-color);
+      background: linear-gradient(to right, 
+        #FF61D8,
+        #FE8D7C,
+        #FDB750,
+        #B39DDB
+      );
+      background-size: 200% 100%;
+      animation: gradient 30s ease infinite;
       color: white;
       padding: 1rem 0;
       margin-bottom: 2rem;
