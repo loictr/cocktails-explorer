@@ -3,16 +3,49 @@
     "tasks": [
         {
             "label": "npm: start",
-            "type": "shell",
-            "command": "npm start",
+            "type": "npm",
+            "script": "start",
+            "isBackground": true,
+            "options": {
+                "cwd": "${workspaceFolder}/front"
+            },
+            "problemMatcher": {
+                "owner": "typescript",
+                "pattern": "$tsc",
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": ".*",
+                    "endsPattern": "bundle generation complete"
+                }
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "problemMatcher": [],
-            "options": {
-                "cwd": "${workspaceFolder}/front"
-            }
+            "detail": "ng serve",
+            "path": "front"
+        },
+        {
+            "label": "Terminate All Tasks",
+            "command": "echo ${input:terminate}",
+            "type": "shell",
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "terminate",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "terminateAll"
         }
     ]
 }
