@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <header class="header">
       <nav class="container">
-        <img src="logo.svg" alt="">
+        <img src="android-chrome-192x192.png" alt="Cocktail Explorer Logo">
         <h1>Cocktail Explorer</h1>
         <a href="https://loictr.github.io/portfolio/projects/cocktail-recommendation/">About</a>
       </nav>
@@ -27,25 +27,26 @@ import { CommonModule } from '@angular/common';
 
     .header {
       background: linear-gradient(to right, 
-        #FF61D8,
-        #FE8D7C,
-        #FDB750,
-        #B39DDB
+        #FF8ED4,
+        #FFAA94,
+        #FFCA7A,
+        #CAA6EC
       );
       background-size: 200% 100%;
-      animation: gradient 30s ease infinite;
+      //animation: gradient 30s ease infinite;
       color: white;
-      padding: 1rem 0;
+      padding: 0.2rem 0;
       margin-bottom: 2rem;
 
       nav{
         display: flex;
         align-items: center;
         flex-wrap: wrap;
+        padding: 0;
       }
 
       img{
-        height: 5rem;
+        height: 10rem;
         margin-right: 1rem;
         vertical-align: middle;
       }
