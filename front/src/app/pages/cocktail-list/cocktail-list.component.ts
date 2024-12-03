@@ -4,12 +4,13 @@ import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { CocktailService } from '../../services/cocktail.service';
 import { Cocktail } from '../../models/cocktail.model';
 import { CocktailCardComponent } from '../../components/cocktail-card/cocktail-card.component';
+import { LoaderComponent } from '../../components/loader/loader.component';
 import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-cocktail-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, CocktailCardComponent],
+  imports: [CommonModule, RouterModule, CocktailCardComponent, LoaderComponent],
   template: `
     <div class="page-header fade-in" *ngIf="!showingSuggestions">
       <div class="page-header-first-row">
@@ -34,7 +35,9 @@ import { Location } from '@angular/common';
       <div>Our suggestions based on your favorite cocktails</div>
     </div>
 
-    <div *ngIf="!showingSuggestions" class="grid">
+    <app-loader *ngIf="isLoading"></app-loader>
+
+    <div *ngIf="!showingSuggestions && !isLoading" class="grid">
       <app-cocktail-card
         *ngFor="let cocktail of cocktails"
         [cocktail]="cocktail"
@@ -43,7 +46,7 @@ import { Location } from '@angular/common';
       </app-cocktail-card>
     </div>
 
-    <div *ngIf="showingSuggestions" class="suggestions slide-up">
+    <div *ngIf="showingSuggestions && !isLoading" class="suggestions slide-up">
       <div class="grid">
         <app-cocktail-card
           *ngFor="let cocktail of suggestedCocktails"
@@ -111,6 +114,7 @@ export class CocktailListComponent implements OnInit {
   cocktails: Cocktail[] = [];
   suggestedCocktails: Cocktail[] = [];
   showingSuggestions = false;
+  isLoading = true;
 
   constructor(
     private cocktailService: CocktailService,
@@ -121,7 +125,10 @@ export class CocktailListComponent implements OnInit {
 
   ngOnInit(): void {
     this.cocktailService.getCocktails().subscribe(
-      cocktails => this.cocktails = cocktails
+      cocktails => {
+        this.cocktails = cocktails;
+        this.isLoading = false;
+      }
     );
 
     this.route.url.subscribe(url => {
@@ -145,15 +152,21 @@ export class CocktailListComponent implements OnInit {
     return this.cocktails.some(c => this.isSelected(c.id));
   }
 
-  showSuggestions(): void {
-    this.cocktailService.getSuggestedCocktails().subscribe(
-      suggestions => {
-        this.suggestedCocktails = suggestions;
-        this.showingSuggestions = true;
-        this.router.navigate(['/cocktails/suggestions']); // Navigate to suggestions route
-        window.scrollTo(0, 0);
-      }
-    );
+  async showSuggestions(): Promise<void> {
+    if (this.hasSelections) {
+      this.isLoading = true;
+      this.showingSuggestions = true;
+      
+      this.cocktailService.getSuggestedCocktails().subscribe(
+        suggestions => {
+          this.suggestedCocktails = suggestions;
+          this.isLoading = false;
+          window.scrollTo(0, 0);
+        }
+      );
+      
+      this.location.replaceState('/suggestions');
+    }
   }
 
   hideSuggestions(): void {
