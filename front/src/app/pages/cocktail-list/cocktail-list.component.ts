@@ -62,7 +62,9 @@ import { Location } from '@angular/common';
       position: sticky;
       top: 0;
       z-index: 1000;
-      padding: 1rem 0;
+      padding: 1rem 1rem;
+      border-radius: 1rem;
+      background-color: #ffe8e0;
     }
     .page-header-first-row {
       display: flex;

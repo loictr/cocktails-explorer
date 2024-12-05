@@ -1,19 +1,23 @@
 import json
 
+import numpy as np
+
 
 class SuggestService:
 
     def __init__(self, db_client):
         self.db_client = db_client
-        self.collection = db_client.get_collection("cocktails")
+        self.collection = db_client.get_collection("cocktails_with_ingredients_characteristics")
 
     def suggest(self, liked_ids:list[str], n_results:int):
 
         liked_recipes_vectors = self.collection.get(ids=liked_ids, include=["metadatas", "embeddings"])
+        combined_embedding = np.max(liked_recipes_vectors["embeddings"], axis=0).tolist()
+
 
         where_clause = {"id": {"$nin": liked_ids}}
 
-        results = self.collection.query(liked_recipes_vectors["embeddings"], where=where_clause, n_results=n_results, include=["metadatas", "distances","documents"])
+        results = self.collection.query(combined_embedding, where=where_clause, n_results=n_results, include=["metadatas", "distances","documents"])
 
         results_structured = []
         for result_set, metadatas in enumerate(results["metadatas"]):
