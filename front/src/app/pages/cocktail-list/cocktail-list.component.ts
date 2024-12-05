@@ -37,13 +37,31 @@ import { Location } from '@angular/common';
 
     <app-loader *ngIf="isLoading"></app-loader>
 
-    <div *ngIf="!showingSuggestions && !isLoading" class="grid">
-      <app-cocktail-card
-        *ngFor="let cocktail of cocktails"
-        [cocktail]="cocktail"
-        [isSelected]="isSelected(cocktail.id)"
-        (onSelect)="toggleSelection($event)">
-      </app-cocktail-card>
+    <div *ngIf="!showingSuggestions && !isLoading">
+      <div class="letter-index">
+        <button 
+          *ngFor="let letter of alphabet" 
+          class="letter-btn"
+          [class.active]="selectedLetter === letter"
+          (click)="filterByLetter(letter)">
+          {{letter}}
+        </button>
+        <button 
+          class="letter-btn all"
+          [class.active]="!selectedLetter"
+          (click)="filterByLetter(null)">
+          All
+        </button>
+      </div>
+
+      <div class="grid">
+        <app-cocktail-card
+          *ngFor="let cocktail of filteredCocktails"
+          [cocktail]="cocktail"
+          [isSelected]="isSelected(cocktail.id)"
+          (onSelect)="toggleSelection($event)">
+        </app-cocktail-card>
+      </div>
     </div>
 
     <div *ngIf="showingSuggestions && !isLoading" class="suggestions slide-up">
@@ -115,6 +133,43 @@ import { Location } from '@angular/common';
     .btn-secondary:hover {
       background-color: #45b8b0;
     }
+    .letter-index {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+      padding: 0.5rem;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--card-shadow);
+    }
+
+    .letter-btn {
+      background: none;
+      border: none;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1rem;
+      color: var(--text-color);
+      transition: all var(--transition-speed);
+    }
+
+    .letter-btn:hover {
+      background: rgba(var(--primary-color-rgb), 0.1);
+    }
+
+    .letter-btn.active {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .letter-btn.all {
+      font-weight: 600;
+      margin-left: 1rem;
+    }
   `]
 })
 export class CocktailListComponent implements OnInit {
@@ -122,6 +177,9 @@ export class CocktailListComponent implements OnInit {
   suggestedCocktails: Cocktail[] = [];
   showingSuggestions = false;
   isLoading = true;
+  alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  selectedLetter: string | null = null;
+  filteredCocktails: Cocktail[] = [];
 
   constructor(
     private cocktailService: CocktailService,
@@ -134,6 +192,7 @@ export class CocktailListComponent implements OnInit {
     this.cocktailService.getCocktails().subscribe(
       cocktails => {
         this.cocktails = cocktails;
+        this.filteredCocktails = cocktails;
         this.isLoading = false;
       }
     );
@@ -180,5 +239,16 @@ export class CocktailListComponent implements OnInit {
     this.showingSuggestions = false;
     this.router.navigate(['/cocktails']); // Navigate to cocktails list route
     window.scrollTo(0, 0);
+  }
+
+  filterByLetter(letter: string | null): void {
+    this.selectedLetter = letter;
+    if (!letter) {
+      this.filteredCocktails = this.cocktails;
+    } else {
+      this.filteredCocktails = this.cocktails.filter(
+        cocktail => cocktail.name.toUpperCase().startsWith(letter)
+      );
+    }
   }
 }
