@@ -21,7 +21,7 @@ import { Location } from '@angular/common';
           ✨ Show Suggestions
         </button>
       </div>
-      <div>Select your favorite cocktails</div>
+      <div>Pick your top cocktails, then let us mix up some new recommendations just for you.</div>
     </div>
     <div class="page-header fade-in" *ngIf="showingSuggestions">
       <div class="page-header-first-row">
@@ -32,7 +32,7 @@ import { Location } from '@angular/common';
                 ← Back to Selection
         </button>
       </div>
-      <div>Our suggestions based on your favorite cocktails</div>
+      <div>Tailored cocktail picks inspired by your favorites</div>
     </div>
 
     <app-loader *ngIf="isLoading"></app-loader>
@@ -77,11 +77,13 @@ import { Location } from '@angular/common';
     }
     h1 {
       font-size: 1.5rem;
+      font-weight: 500;
       color: #0885CF;
       flex: 1 1 100%;
     }
     .btn {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
       flex: 1 1 100%;
     }
     @media (min-width: 600px) {
