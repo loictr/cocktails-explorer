@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterModule } from '@angular/router'; // Add RouterModule
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, RouterModule], // Add RouterModule here
   template: `
     <header class="header">
       <nav class="container">
-        <img src="android-chrome-192x192.png" alt="Cocktail Explorer Logo">
-        <h1>Cocktail Explorer</h1>
-        <a href="https://loictr.github.io/portfolio/projects/cocktail-recommendation/">About</a>
+        <a routerLink="/" class="brand">
+          <img src="android-chrome-192x192.png" alt="Cocktail Explorer Logo">
+          <h1>Cocktail Explorer</h1>
+        </a>
+        <a href="https://loictr.github.io/portfolio/projects/cocktail-recommendation/" class="about">About</a>
       </nav>
     </header>
     <main class="container">
@@ -27,16 +29,15 @@ import { CommonModule } from '@angular/common';
 
     .header {
       background: linear-gradient(to right, 
-        #FF8ED4,
-        #FFAA94,
-        #FFCA7A,
-        #CAA6EC
+        #1892D9,
+        #108D6E
       );
-      background-size: 200% 100%;
-      //animation: gradient 30s ease infinite;
+      background-size: 300% 100%;
+      animation: gradient 20s ease infinite;
       color: white;
-      padding: 0.2rem 0;
-      margin-bottom: 2rem;
+      padding: 1.5rem 0;
+      
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
 
       nav{
         display: flex;
@@ -64,19 +65,36 @@ import { CommonModule } from '@angular/common';
         color: white;
         text-decoration: none;
         font-size: 1.5rem;
-        margin-left: auto;
         vertical-align: baseline;
-        margin-left: 4rem;
       }
 
       a:hover{
-        text-decoration: underline;
+        text-decoration: none;
       }
     }
 
+    .brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .brand:hover {
+      text-decoration: none;
+    }
+
+    .about {
+      margin-left: auto;
+    }
+
     @media (max-width: 600px) {
+      .header{
+        text-align:center;
+      }
       .header img {
-        height: 3rem;
+        height: 7rem;
+        margin:0;
       }
       .header h1 {
         font-size: 2rem;
@@ -87,6 +105,14 @@ import { CommonModule } from '@angular/common';
         font-size: 1rem;
         text-align:center;
         margin-left: 0;
+        width: 100%;
+      }
+      .brand {
+        flex-direction: column;
+        width: 100%;
+      }
+      .about {
+        margin: 1rem 0 0 0;
         width: 100%;
       }
     }

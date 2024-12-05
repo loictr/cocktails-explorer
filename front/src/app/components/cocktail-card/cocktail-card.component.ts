@@ -125,6 +125,47 @@ import { MatButtonModule } from '@angular/material/button';
     .btn-favorite.selected mat-icon::before {
       content: 'favorite';
     }
+
+    .card-content {
+      padding: 2.5rem;
+    }
+
+    .ingredients li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(217, 96, 24, 0.1);
+      color: #666;
+      font-size: 1rem;
+      transition: all var(--transition-speed);
+    }
+
+    .ingredients li:hover {
+      color: var(--primary-color);
+      transform: translateX(8px);
+    }
+
+    .btn-favorite mat-icon {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-favorite.selected mat-icon {
+      color: var(--primary-color);
+      transform: scale(1.2);
+    }
+
+    .card:hover {
+      transform: translateY(-12px) rotate(1deg);
+      box-shadow: 0 25px 50px rgba(217, 96, 24, 0.12);
+    }
+
+    .card img {
+      height: 250px;
+      filter: brightness(1.05);
+      transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card:hover img {
+      transform: scale(1.08);
+    }
   `]
 })
 export class CocktailCardComponent {

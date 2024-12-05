@@ -64,18 +64,20 @@ import { Location } from '@angular/common';
       z-index: 1000;
       padding: 1rem 1rem;
       border-radius: 1rem;
-      background-color: #ffe8e0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+      top: 1rem;
     }
     .page-header-first-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
       flex-wrap: wrap;
     }
     h1 {
-      font-size: 2.5rem;
-      color: var(--text-color);
+      font-size: 1.5rem;
+      color: #0885CF;
       flex: 1 1 100%;
     }
     .btn {
@@ -87,6 +89,7 @@ import { Location } from '@angular/common';
         flex-wrap: nowrap;
       }
       h1 {
+        font-size: 2.5rem;
         flex: 0 1 auto;
       }
       .btn {

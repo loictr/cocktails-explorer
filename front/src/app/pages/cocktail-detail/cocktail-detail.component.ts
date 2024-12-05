@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [CommonModule, RouterModule, AlcoholBadgeComponent, GlassBadgeComponent, MatIconModule, MatButtonModule],
   template: `
     <div *ngIf="cocktail" class="cocktail-detail slide-up">
-      <a routerLink="/" class="btn btn-secondary back-btn">← Back to List</a>
+      <a routerLink="/" class="btn back-btn">← Back to List</a>
       
       <div class="detail-content">
         <div class="image-section">

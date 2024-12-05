@@ -20,17 +20,17 @@ import { CommonModule } from '@angular/common';
     }
     
     .loader {
-      width: 48px;
-      height: 48px;
-      border: 5px solid var(--background-color);
-      border-bottom-color: var(--primary-color);
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(239, 176, 144, 0.2);
+      border-top: 4px solid var(--primary-color);
       border-radius: 50%;
       display: inline-block;
       box-sizing: border-box;
-      animation: rotation 1s linear infinite;
+      animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
     
-    @keyframes rotation {
+    @keyframes spin {
       0% {
         transform: rotate(0deg);
       }
