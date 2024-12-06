@@ -19,7 +19,7 @@ services:
       context: ..
       dockerfile: deployment/front.docker
     ports:
-      - "80:80"
+      - "4200:80"  # Change this line to map port 4200 on the host to port 80 in the container
     depends_on:
       - api
 

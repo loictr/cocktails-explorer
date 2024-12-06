@@ -1,3 +1,19 @@
+# docker compose for local deployment testing
+
+```shell
+docker-compose -f deployment/docker-compose.yml up --build
+```
+
+Access the services:
+
+API: http://localhost:4201
+Frontend: http://localhost:4200
+
+
+```shell
+docker-compose down
+```
+
 # Gihub deployment
 Add the following secrets to GitHub:
 
@@ -24,18 +40,3 @@ az ad sp create-for-rbac --name "cocktails-github" \
 ```
 
 
-# docker compose
-
-```shell
-docker-compose -f deployment/docker-compose.yml up --build
-```
-
-Access the services:
-
-API: http://localhost:4201
-Frontend: http://localhost:80
-
-
-```shell
-docker-compose down
-```

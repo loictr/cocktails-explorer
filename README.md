@@ -8,3 +8,8 @@ steps:
 3. `processing/vectorize_recipes_with_ingredients_charac.py`: based on recipes files and ingredients files, build the vector database
 
 For now, the db is created locally and deployed as-is
+
+
+# Deployment
+
+see [the specific readme](deployment\readme.md)
