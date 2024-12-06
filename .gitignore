@@ -6,8 +6,7 @@ front/node_modules
 
 **/__pycache__/
 
-db/
+#db/
 data/
 
-from bolt/
 node_modules/

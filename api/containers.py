@@ -1,25 +1,25 @@
 from dependency_injector import containers, providers
 import chromadb
 from chromadb.config import Settings
+import os
 
 from suggest_service import SuggestService
 from repository import Repository
-import os
 
 if not os.path.exists("config.yml"):
     raise FileNotFoundError("The configuration file 'config.yml' does not exist.")
-
-config = providers.Configuration(yaml_files=["config.yml"])
-print(config.chromadb())
 
 class Container(containers.DeclarativeContainer):
 
     config = providers.Configuration(yaml_files=["./config.yml"], strict=True)
     config.load()
+    
+    # Override config with env var if present
+    chromadb_path = os.getenv('CHROMADB_PATH', config.chromadb.persist_directory())
 
     db_client = providers.Factory(
         chromadb.PersistentClient,
-        path=config.chromadb.persist_directory(),
+        path=chromadb_path,
         settings=Settings(allow_reset=True, anonymized_telemetry=False),
     )
 

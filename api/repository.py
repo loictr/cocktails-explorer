@@ -5,7 +5,7 @@ import chromadb
 class Repository:
     def __init__(self, db_client: chromadb.Client):
         self.client = db_client
-        self.collection:chromadb.Collection = db_client.get_collection("cocktails")
+        self.collection:chromadb.Collection = db_client.get_collection("cocktails_with_ingredients_characteristics")
 
     def get_cocktails(self):
         results = self.collection.get(include=["metadatas"])

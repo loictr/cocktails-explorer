@@ -1,0 +1,53 @@
+# .github/workflows/deploy.yml
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Build and push API image
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+    
+    - run: |
+        docker build -f deployment/api.docker . -t ${{ secrets.ACR_LOGIN_SERVER }}/cocktails-api:${{ github.sha }}
+        docker push ${{ secrets.ACR_LOGIN_SERVER }}/cocktails-api:${{ github.sha }}
+        
+    - name: Build and push Frontend image  
+      run: |
+        docker build -f deployment/front.docker . -t ${{ secrets.ACR_LOGIN_SERVER }}/cocktails-frontend:${{ github.sha }}
+        docker push ${{ secrets.ACR_LOGIN_SERVER }}/cocktails-frontend:${{ github.sha }}
+    
+    - name: Upload ChromaDB data
+      run: |
+        pip install azure-storage-file
+        python scripts/upload_initial_db.py
+      env:
+        AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+    
+    - name: Deploy to Azure Web Apps
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'cocktails-api'
+        images: ${{ secrets.ACR_LOGIN_SERVER }}/cocktails-api:${{ github.sha }}
+    
+    - name: Deploy Frontend
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'cocktails-frontend'
+        images: ${{ secrets.ACR_LOGIN_SERVER }}/cocktails-frontend:${{ github.sha }}

@@ -3,7 +3,7 @@ DB_DIRECTORY = '../db'
 
 from importlib.metadata import files
 import os
-from typing import Any, Dict, Iterator, Literal
+from typing import Any, Dict
 import pandas as pd
 import json
 import pprint
@@ -195,8 +195,9 @@ for id, row in df.iterrows():
     # print(f"-------- {row['strDrink']}")
     # pprint.pp(row['embeddings'][0])
     # pprint.pp(vectorizer.inverse_transform(row['embeddings']))
+    embedding_list = row['embeddings'][0].tolist()
     collection.add(
-        embeddings=[row['embeddings'][0]],
+        embeddings=[embedding_list],
         documents=[row["strDrink"]],#[json.dumps(row['features'])],
         metadatas={
             "name": row["strDrink"], 
