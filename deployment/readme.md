@@ -28,19 +28,41 @@ az deployment group create --resource-group cocktails-rg --template-file deploym
 # Create service principal for GitHub Actions (AZURE_CREDENTIALS)
 az ad sp create-for-rbac --name "cocktails-github" --role contributor --scopes /subscriptions/{subscription-id}/resourceGroups/cocktails-rg
 
-# Get the ACR informations
-# ACR_LOGIN_SERVER:
-az acr show --name cocktailsacr --query "loginServer" --output tsv
-# ACR_USERNAME and ACR_PASSWORD
-az acr credential show --name cocktailsacr
+# Get the storage connection string
+az storage account show-connection-string --name cocktailsstorage --resource-group cocktails-rg
 ```
 
 # Github deployment
+See `/.github/workflows/deploy.yml` for Github Actions workflow
+
 Add the following secrets to GitHub:
 
 - AZURE_CREDENTIALS
+
+The value of the secret is a json:
+```json
+{
+    "clientSecret":  "<password in the create-for-rbac result>",
+    "subscriptionId":  "<subscription id>",
+    "tenantId":  "<tenant in the create-for-rbac result>",
+    "clientId":  "<appId in the create-for-rbac result>"
+}
+```
+
 - ACR_LOGIN_SERVER
+```shell
+az acr show --name cocktailsacr --query "loginServer" --output tsv
+```
+
 - ACR_USERNAME
 - ACR_PASSWORD
+```shell
+az acr credential show --name cocktailsacr
+```
+
+- AZURE_STORAGE_CONNECTION_STRING
+```shell
+az storage account show-connection-string --name cocktailsstorage --resource-group cocktails-rg
+```
 
 

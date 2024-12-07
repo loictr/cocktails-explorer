@@ -49,6 +49,10 @@ resource frontendApp 'Microsoft.Web/sites@2021-02-01' = {
           name: 'DOCKER_REGISTRY_SERVER_PASSWORD'
           value: acr.listCredentials().passwords[0].value
         }
+        {
+          name: 'API_HOST'
+          value: '${appName}-api.azurewebsites.net'
+        }
       ]
     }
   }
