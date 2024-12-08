@@ -7,7 +7,7 @@ import { Cocktail, CocktailDetails } from '../models/cocktail.model';
   providedIn: 'root'
 })
 export class CocktailService {
-  private apiUrl = 'http://localhost:4201/api';
+  private apiUrl = '/api';  // Update this to match the combined service
   private selectedCocktails: Set<string> = new Set();
 
   constructor(private http: HttpClient) {}

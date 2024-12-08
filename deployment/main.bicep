@@ -28,44 +28,14 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
   }
 }
 
-// Frontend Web App
-resource frontendApp 'Microsoft.Web/sites@2021-02-01' = {
-  name: '${appName}-frontend'
+// Combined Web App
+resource combinedApp 'Microsoft.Web/sites@2021-02-01' = {
+  name: '${appName}'
   location: location
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
       linuxFxVersion: 'DOCKER|nginx:alpine'
-      appSettings: [
-        {
-          name: 'DOCKER_REGISTRY_SERVER_URL'
-          value: 'https://${acr.properties.loginServer}'
-        }
-        {
-          name: 'DOCKER_REGISTRY_SERVER_USERNAME'
-          value: acr.listCredentials().username
-        }
-        {
-          name: 'DOCKER_REGISTRY_SERVER_PASSWORD'
-          value: acr.listCredentials().passwords[0].value
-        }
-        {
-          name: 'API_HOST'
-          value: '${appName}-api.azurewebsites.net'
-        }
-      ]
-    }
-  }
-}
-
-// API Web App
-resource apiApp 'Microsoft.Web/sites@2021-02-01' = {
-  name: '${appName}-api'
-  location: location
-  properties: {
-    serverFarmId: appServicePlan.id
-    siteConfig: {
-      linuxFxVersion: 'DOCKER|python:3.11'
       appSettings: [
         {
           name: 'DOCKER_REGISTRY_SERVER_URL'

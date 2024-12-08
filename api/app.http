@@ -1,4 +1,4 @@
-@base_url=http://127.0.0.1:4201
+@base_url=http://127.0.0.1
 
 ###
 # @name cocktails_list

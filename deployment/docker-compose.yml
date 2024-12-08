@@ -2,26 +2,14 @@
 version: '3.8'
 
 services:
-  api:
+  cocktail:
     build:
       context: ..
-      dockerfile: deployment/api.docker
+      dockerfile: deployment/cocktail.dockerfile
     ports:
-      - "4201:4201"
+      - "80:80"
     volumes:
       - ../db:/app/db
     environment:
       - FLASK_ENV=production
       - CHROMADB_PATH=/app/db
-
-  frontend:
-    build:
-      context: ..
-      dockerfile: deployment/front.docker
-    ports:
-      - "4200:80"  # Change this line to map port 4200 on the host to port 80 in the container
-    depends_on:
-      - api
-
-volumes:
-  db_data:
