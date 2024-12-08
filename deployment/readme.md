@@ -51,16 +51,16 @@ The value of the secret is a json:
 
 - ACR_LOGIN_SERVER
 ```shell
-az acr show --name cocktailsacr --query "loginServer" --output tsv
+az acr show --name cocktailsexploreracr --query "loginServer" --output tsv
 ```
 
 - ACR_USERNAME
 - ACR_PASSWORD
 ```shell
-az acr credential show --name cocktailsacr
+az acr credential show --name cocktailsexploreracr
 ```
 
 - AZURE_STORAGE_CONNECTION_STRING
 ```shell
-az storage account show-connection-string --name cocktailsstorage --resource-group cocktails-rg
+az storage account show-connection-string --name cocktailsexplorerstorage --resource-group cocktails-rg
 ```
