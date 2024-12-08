@@ -19,7 +19,7 @@ jobs:
     
     - name: Deploy infrastructure
       run: |
-        az deployment group create --resource-group cocktails-rg --template-file deployment/main.bicep --parameters appName=cocktails
+        az deployment group create --resource-group cocktails-rg --template-file deployment/main.bicep --parameters appName=cocktails-explorer
       env:
         AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
     
