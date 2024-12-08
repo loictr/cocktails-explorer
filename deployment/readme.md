@@ -1,13 +1,13 @@
 # Docker compose for local deployment testing
 
 ```shell
-docker-compose -f deployment/docker-compose.yml up --build
+docker-compose -f [docker-compose.yml](http://_vscodecontentref_/2) up --build
 ```
 
 Access the services:
 
-API: http://localhost:4201
-Frontend: http://localhost:4200
+API: http://localhost:5000/api/cocktails
+Frontend: http://localhost
 
 
 ```shell
@@ -64,5 +64,3 @@ az acr credential show --name cocktailsacr
 ```shell
 az storage account show-connection-string --name cocktailsstorage --resource-group cocktails-rg
 ```
-
-
