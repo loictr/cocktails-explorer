@@ -35,7 +35,7 @@ resource combinedApp 'Microsoft.Web/sites@2021-02-01' = {
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
-      linuxFxVersion: 'DOCKER|nginx:alpine'
+      linuxFxVersion: 'DOCKER|${acr.properties.loginServer}/${appName}-combined:latest'
       appSettings: [
         {
           name: 'DOCKER_REGISTRY_SERVER_URL'
@@ -58,15 +58,6 @@ resource combinedApp 'Microsoft.Web/sites@2021-02-01' = {
           value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
         }
       ]
-      azureStorageAccounts: {
-        chromadb: {
-          type: 'AzureFiles'
-          accountName: storageAccount.name
-          shareName: 'chromadb'
-          mountPath: '/chromadb'
-          accessKey: listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value
-        }
-      }
     }
   }
 }
