@@ -86,6 +86,8 @@ import { CommonModule } from '@angular/common';
 
     .about {
       margin-left: auto;
+      padding-left: 1rem;
+      padding-left: 1rem;
     }
 
     @media (max-width: 600px) {
