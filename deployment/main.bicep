@@ -13,7 +13,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' existing = {
 }
 
 // Combined Web App
-resource combinedApp 'Microsoft.Web/sites@2021-02-01' existing = {
+resource combinedApp 'Microsoft.Web/sites@2021-02-01' = {
   name: '${appName}'
   location: location
   properties: {
