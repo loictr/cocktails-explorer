@@ -1,7 +1,7 @@
 # Docker compose for local deployment testing
 
 ```shell
-docker-compose -f [docker-compose.yml](http://_vscodecontentref_/2) up --build
+docker-compose -f docker-compose.yml up --build
 ```
 
 Access the services:
