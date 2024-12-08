@@ -40,7 +40,7 @@ jobs:
     
     - name: Upload ChromaDB data
       run: |
-        pip install azure-storage-file
+        pip install azure-storage-file-share
         python deployment/scripts/upload_initial_db.py
       env:
         AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
