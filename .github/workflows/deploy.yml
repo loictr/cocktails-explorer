@@ -8,6 +8,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      APP_NAME: cocktailsexplorer
     
     steps:
     - uses: actions/checkout@v2
@@ -19,7 +21,7 @@ jobs:
     
     - name: Deploy infrastructure
       run: |
-        az deployment group create --resource-group cocktails-rg --template-file deployment/main.bicep --parameters appName=cocktailsexplorer
+        az deployment group create --resource-group cocktails-rg --template-file deployment/main.bicep --parameters appName=${{ env.APP_NAME }}
       env:
         AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
     
@@ -46,5 +48,5 @@ jobs:
     - name: Deploy to Azure Web Apps
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'cocktails'
+        app-name: ${{ env.APP_NAME }}
         images: ${{ secrets.ACR_LOGIN_SERVER }}/cocktails-combined:${{ github.sha }}
