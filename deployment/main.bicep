@@ -39,7 +39,7 @@ resource combinedApp 'Microsoft.Web/sites@2021-02-01' = {
       appSettings: [
         {
           name: 'DOCKER_REGISTRY_SERVER_URL'
-          value: 'https://${acr.properties.loginServer}'
+          value: acr.properties.loginServer
         }
         {
           name: 'DOCKER_REGISTRY_SERVER_USERNAME'
@@ -55,7 +55,7 @@ resource combinedApp 'Microsoft.Web/sites@2021-02-01' = {
         }
         {
           name: 'AZURE_STORAGE_CONNECTION_STRING'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${storageAccount.listKeys().keys[0].value}'
         }
       ]
     }
@@ -73,7 +73,12 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-06-01' = {
 }
 
 // Add File Share
+resource fileService 'Microsoft.Storage/storageAccounts/fileServices@2021-06-01' = {
+  name: 'default'
+  parent: storageAccount
+}
+
 resource fileShare 'Microsoft.Storage/storageAccounts/fileServices/shares@2021-06-01' = {
   name: 'chromadb'
-  parent: storageAccount
+  parent: fileService
 }
