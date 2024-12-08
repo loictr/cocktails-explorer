@@ -3,35 +3,21 @@ param location string = resourceGroup().location
 param appName string
 
 // Container Registry
-resource acr 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
+resource acr 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' existing = {
   name: '${appName}acr'
-  location: location
-  sku: {
-    name: 'Basic'
-  }
-  properties: {
-    adminUserEnabled: true
-  }
+  scope: resourceGroup()
 }
 
 // App Service Plan
-resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
+resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' existing = {
   name: '${appName}-plan'
-  location: location
-  sku: {
-    name: 'P1v2'
-    tier: 'PremiumV2'
-  }
-  kind: 'linux'
-  properties: {
-    reserved: true
-  }
+  scope: resourceGroup()
 }
 
 // Combined Web App
-resource combinedApp 'Microsoft.Web/sites@2021-02-01' = {
+resource combinedApp 'Microsoft.Web/sites@2021-02-01' existing = {
   name: '${appName}'
-  location: location
+  scope: resourceGroup()
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
@@ -63,16 +49,13 @@ resource combinedApp 'Microsoft.Web/sites@2021-02-01' = {
 }
 
 // Add Storage Account
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-06-01' = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-06-01' existing = {
   name: '${appName}storage'
-  location: location
-  sku: {
-    name: 'Standard_LRS'
-  }
-  kind: 'StorageV2'
+  scope: resourceGroup()
 }
 
 // Add File Share
-resource fileShare 'Microsoft.Storage/storageAccounts/fileServices/shares@2021-06-01' = {
+resource fileShare 'Microsoft.Storage/storageAccounts/fileServices/shares@2021-06-01' existing = {
   name: '${storageAccount.name}/default/chromadb'
+  scope: resourceGroup()
 }
